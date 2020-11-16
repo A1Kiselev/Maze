@@ -1,4 +1,5 @@
 import Point from "./Point";
+import mazeData from "./Maze";
 
 const looking = [];
 const looked = [];
@@ -24,12 +25,18 @@ const isLooking = (point) => {
   return is
 }
 
+const isPointIntoMaze = (maze,x,y) =>{
+  return !!(maze[y] !== undefined && maze[y][x] !== undefined);
+}
+
 const looks = (maze, point, border) => {
-  if (maze[point.y][point.x] !== 1 && !isChecked(point)) {
+  if (isPointIntoMaze(maze, point.x, point.y) && maze[point.y][point.x] !== 1 && !isChecked(point)) {
     if (point.x === border || point.y === border) {
       return point;
     }
-    looking.push(point);
+    if (!isLooking(point)) {
+      looking.push(point);
+    }
   }
   return false;
 }
